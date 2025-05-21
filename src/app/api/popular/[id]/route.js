@@ -1,10 +1,11 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request, {params}) {
+  const {id} = await params
   const options = {
     method: "GET",
-    url: "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+    url: "https://api.themoviedb.org/3/movie/popular?language=fr-FR&page="+id,
     headers: {
       accept: "application/json",
       Authorization:
