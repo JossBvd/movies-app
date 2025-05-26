@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/popular/${id}`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_URL}/api/popular/${id ? id : 1}`);
         const data = res.data.films;
         setFilms(data);
       } catch (err) {
