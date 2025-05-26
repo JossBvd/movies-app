@@ -4,11 +4,12 @@ import FilmThumbnails from "@/components/FilmThumbnails";
 import Navbar from "@/components/Navbar";
 import Pagination from "@/components/Pagination";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const {id} = useParams()
+  const router = useRouter();
+  const { id } = useParams();
   const [films, setFilms] = useState([]);
   const [displayFilm, setDisplayFilm] = useState(null);
   const [searchFilms, setSearchFilms] = useState([]);
@@ -16,7 +17,12 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_URL}/api/popular/${id ? id : 1}`);
+        if (!id) {
+          router.push("/1");
+        }
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_URL}/api/popular/${id}`
+        );
         const data = res.data.films;
         setFilms(data);
       } catch (err) {
@@ -57,7 +63,7 @@ export default function Home() {
           setDisplayFilm={setDisplayFilm}
         />
       </main>
-      <Pagination/>
+      <Pagination />
     </div>
   );
 }
